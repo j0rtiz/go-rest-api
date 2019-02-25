@@ -2,11 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
+
+var porta = ":8000"
 
 type Pessoa struct {
 	id       string    `json:"id,omitempty`
@@ -26,7 +29,11 @@ type Endereco struct {
 var cadastro []Pessoa
 
 func API(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Web server listening at: http://localhost:8000\n"))
+	w.Write([]byte("Métodos:\n\n"))
+	w.Write([]byte("GET    -> http://localhost:{porta}/cadastros     -> Lista todos os cadastros\n"))
+	w.Write([]byte("GET    -> http://localhost:{porta}/cadastro/{id} -> Lista cadastro com o id que foi passado\n"))
+	w.Write([]byte("POST   -> http://localhost:{porta}/cadastro/{id} -> Cria cadastro com o id que foi passado\n"))
+	w.Write([]byte("DELETE -> http://localhost:{porta}/cadastro/{id} -> Exclui cadastro com o id que foi passado\n"))
 }
 
 func GetPessoaById(w http.ResponseWriter, r *http.Request) {
@@ -39,9 +46,11 @@ func GetPessoaById(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(&Pessoa{})
 }
+
 func GetPessoa(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(cadastro)
 }
+
 func CreatePessoa(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var pessoa Pessoa
@@ -50,6 +59,7 @@ func CreatePessoa(w http.ResponseWriter, r *http.Request) {
 	cadastro = append(cadastro, pessoa)
 	json.NewEncoder(w).Encode(cadastro)
 }
+
 func DeletePessoa(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for index, item := range cadastro {
@@ -65,9 +75,10 @@ func main() {
 	router := mux.NewRouter()
 	cadastro = append(cadastro, Pessoa{id: "1", nome: "João Ninguém", telefone: "51999999999", email: "joao.ninguem@golang.io", endereco: &Endereco{logradouro: "Assis Brasil", numero: "8450", bairro: "Sarandi", cidade: "Porto Algre", estado: "RS"}})
 	router.HandleFunc("/", API)
-	router.HandleFunc("/people", GetPessoa).Methods("GET")
-	router.HandleFunc("/people/{id}", GetPessoaById).Methods("GET")
-	router.HandleFunc("/people/{id}", CreatePessoa).Methods("POST")
-	router.HandleFunc("/people/{id}", DeletePessoa).Methods("DELETE")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	router.HandleFunc("/cadastros", GetPessoa).Methods("GET")
+	router.HandleFunc("/cadastro/{id}", GetPessoaById).Methods("GET")
+	router.HandleFunc("/cadastro/{id}", CreatePessoa).Methods("POST")
+	router.HandleFunc("/cadastro/{id}", DeletePessoa).Methods("DELETE")
+	fmt.Printf("Web server listening at: http://localhost%s", porta)
+	log.Fatal(http.ListenAndServe(porta, router))
 }
