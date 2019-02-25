@@ -12,18 +12,19 @@ import (
 var porta = ":8000"
 
 type Pessoa struct {
-	id       string    `json:"id,omitempty`
-	nome     string    `json:"nome,omitempty`
-	telefone string    `json:"telefone,omitempty"`
-	email    string    `json:"email,omitempty"`
-	endereco *Endereco `json:"endereco,omitempty"`
+	ID       string    `json:"id,omitempty"`
+	Nome     string    `json:"nome,omitempty"`
+	Telefone string    `json:"telefone,omitempty"`
+	Email    string    `json:"email,omitempty"`
+	Endereco *Endereco `json:"endereco,omitempty"`
 }
+
 type Endereco struct {
-	logradouro string `json:"logradouro,omitempty"`
-	numero     string `json:"numero,omitempty"`
-	bairro     string `json:"bairro,omitempty"`
-	cidade     string `json:"cidade,omitempty"`
-	estado     string `json:"estado,omitempty"`
+	Logradouro string `json:"logradouro,omitempty"`
+	Numero     string `json:"numero,omitempty"`
+	Bairro     string `json:"bairro,omitempty"`
+	Cidade     string `json:"cidade,omitempty"`
+	Estado     string `json:"estado,omitempty"`
 }
 
 var cadastro []Pessoa
@@ -39,7 +40,7 @@ func API(w http.ResponseWriter, r *http.Request) {
 func GetPessoaById(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for _, item := range cadastro {
-		if item.id == params["id"] {
+		if item.ID == params["id"] {
 			json.NewEncoder(w).Encode(item)
 			return
 		}
@@ -55,7 +56,7 @@ func CreatePessoa(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var pessoa Pessoa
 	_ = json.NewDecoder(r.Body).Decode(&pessoa)
-	pessoa.id = params["id"]
+	pessoa.ID = params["id"]
 	cadastro = append(cadastro, pessoa)
 	json.NewEncoder(w).Encode(cadastro)
 }
@@ -63,7 +64,7 @@ func CreatePessoa(w http.ResponseWriter, r *http.Request) {
 func DeletePessoa(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for index, item := range cadastro {
-		if item.id == params["id"] {
+		if item.ID == params["id"] {
 			cadastro = append(cadastro[:index], cadastro[index+1:]...)
 			break
 		}
@@ -73,7 +74,7 @@ func DeletePessoa(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := mux.NewRouter()
-	cadastro = append(cadastro, Pessoa{id: "1", nome: "João Ninguém", telefone: "51999999999", email: "joao.ninguem@golang.io", endereco: &Endereco{logradouro: "Assis Brasil", numero: "8450", bairro: "Sarandi", cidade: "Porto Algre", estado: "RS"}})
+	cadastro = append(cadastro, Pessoa{ID: "1", Nome: "João Ninguém", Telefone: "51999999999", Email: "joao.ninguem@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
 	router.HandleFunc("/", API)
 	router.HandleFunc("/cadastros", GetPessoa).Methods("GET")
 	router.HandleFunc("/cadastro/{id}", GetPessoaById).Methods("GET")
