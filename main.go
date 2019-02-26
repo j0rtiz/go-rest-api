@@ -7,9 +7,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/thedevsaddam/renderer"
 )
-
-var porta = ":8000"
 
 type Pessoa struct {
 	ID       string    `json:"id,omitempty"`
@@ -29,12 +28,19 @@ type Endereco struct {
 
 var cadastro []Pessoa
 
-func API(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Métodos:\n\n"))
-	w.Write([]byte("GET    -> http://localhost:{porta}/cadastros     -> Lista todos os cadastros\n"))
-	w.Write([]byte("GET    -> http://localhost:{porta}/cadastro/{id} -> Lista cadastro com o id que foi passado\n"))
-	w.Write([]byte("POST   -> http://localhost:{porta}/cadastro/{id} -> Cria cadastro com o id que foi passado\n"))
-	w.Write([]byte("DELETE -> http://localhost:{porta}/cadastro/{id} -> Exclui cadastro com o id que foi passado\n"))
+var renderizar *renderer.Render
+
+var porta = ":8000"
+
+func init() {
+	opts := renderer.Options{
+		ParseGlobPattern: "./tpl/*.html",
+	}
+	renderizar = renderer.New(opts)
+}
+
+func home(w http.ResponseWriter, r *http.Request) {
+	renderizar.HTML(w, http.StatusOK, "home", nil)
 }
 
 func GetPessoaById(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +81,7 @@ func DeletePessoa(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := mux.NewRouter()
 	cadastro = append(cadastro, Pessoa{ID: "1", Nome: "João Ninguém", Telefone: "51999999999", Email: "joao.ninguem@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
-	router.HandleFunc("/", API)
+	router.HandleFunc("/", home)
 	router.HandleFunc("/cadastros", GetPessoa).Methods("GET")
 	router.HandleFunc("/cadastro/{id}", GetPessoaById).Methods("GET")
 	router.HandleFunc("/cadastro/{id}", CreatePessoa).Methods("POST")

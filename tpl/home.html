@@ -1,0 +1,45 @@
+{{ define "home" }}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+{{ template "header" }}
+
+<body>
+
+  {{ template "navbar" }}
+
+  <div class="container">
+
+    <div class="starter-template">
+
+      <ul class="align">
+        <li>
+          <strong>GET</strong>
+          <span>- http://localhost:{porta}/cadastros -> Lista todos os cadastros</span>
+        </li>
+        <li>
+          <strong>GET by ID</strong>
+          <span>- http://localhost:{porta}/cadastro/{id} -> Lista cadastro com o id que foi passado</span>
+        </li>
+        <li>
+          <strong>POST</strong>
+          <span>- http://localhost:{porta}/cadastro/{id} -> Cria cadastro com o id que foi passado</span>
+        </li>
+        <li>
+          <strong>DELETE</strong>
+          <span>- http://localhost:{porta}/cadastro/{id} -> Exclui cadastro com o id que foi passado</span>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+
+  {{ template "footer" }}
+
+</body>
+
+</html>
+
+{{ end }}
