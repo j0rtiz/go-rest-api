@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"github.com/thedevsaddam/renderer"
 )
 
@@ -40,6 +41,7 @@ func init() {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	renderizar.HTML(w, http.StatusOK, "home", nil)
 }
 
@@ -80,12 +82,13 @@ func DeletePessoa(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := mux.NewRouter()
-	cadastro = append(cadastro, Pessoa{ID: "1", Nome: "João Ninguém", Telefone: "51999999999", Email: "joao.ninguem@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
 	router.HandleFunc("/", home)
 	router.HandleFunc("/cadastros", GetPessoa).Methods("GET")
 	router.HandleFunc("/cadastro/{id}", GetPessoaById).Methods("GET")
 	router.HandleFunc("/cadastro/{id}", CreatePessoa).Methods("POST")
 	router.HandleFunc("/cadastro/{id}", DeletePessoa).Methods("DELETE")
+	handler := cors.Default().Handler(router)
+	cadastro = append(cadastro, Pessoa{ID: "1", Nome: "João Ninguém", Telefone: "51999999999", Email: "joao.ninguem@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
 	fmt.Printf("Web server listening at: http://localhost%s", porta)
-	log.Fatal(http.ListenAndServe(porta, router))
+	log.Fatal(http.ListenAndServe(porta, handler))
 }
