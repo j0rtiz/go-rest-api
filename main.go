@@ -88,7 +88,9 @@ func main() {
 	router.HandleFunc("/cadastro/{id}", CreatePessoa).Methods("POST")
 	router.HandleFunc("/cadastro/{id}", DeletePessoa).Methods("DELETE")
 	handler := cors.Default().Handler(router)
-	cadastro = append(cadastro, Pessoa{ID: "1", Nome: "João Ninguém", Telefone: "51999999999", Email: "joao.ninguem@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
+	cadastro = append(cadastro, Pessoa{ID: "1", Nome: "João Ninguém", Telefone: "51999999999", Email: "joao.ninguem1@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
+	cadastro = append(cadastro, Pessoa{ID: "2", Nome: "Outro João Ninguém", Telefone: "51999999998", Email: "joao.ninguem2@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
+	cadastro = append(cadastro, Pessoa{ID: "3", Nome: "Mais um João Ninguém", Telefone: "51999999997", Email: "joao.ninguem3@golang.io", Endereco: &Endereco{Logradouro: "Assis Brasil", Numero: "8450", Bairro: "Sarandi", Cidade: "Porto Algre", Estado: "RS"}})
 	fmt.Printf("Web server listening at: http://localhost%s", porta)
 	log.Fatal(http.ListenAndServe(porta, handler))
 }
