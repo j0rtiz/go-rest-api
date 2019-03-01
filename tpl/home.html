@@ -13,24 +13,42 @@
 
     <div class="starter-template">
 
-      <ul class="align">
-        <li>
-          <strong>GET</strong>
-          <span>- http://localhost:{porta}/cadastros -> Lista todos os cadastros</span>
-        </li>
-        <li>
-          <strong>GET by ID</strong>
-          <span>- http://localhost:{porta}/cadastro/{id} -> Lista cadastro com o id que foi passado</span>
-        </li>
-        <li>
-          <strong>POST</strong>
-          <span>- http://localhost:{porta}/cadastro/{id} -> Cria cadastro com o id que foi passado</span>
-        </li>
-        <li>
-          <strong>DELETE</strong>
-          <span>- http://localhost:{porta}/cadastro/{id} -> Exclui cadastro com o id que foi passado</span>
-        </li>
-      </ul>
+      <table class="tabela">
+        <tbody class="corpo">
+          <tr>
+            <td class="padding">
+              <button class="botao get">GET</button>
+            </td>
+            <td>/cadastros</td>
+            <td>&#8594</td>
+            <td>Lista todos os cadastros</td>
+          </tr>
+          <tr>
+            <td class="padding">
+              <button class="botao get">GET</button>
+            </td>
+            <td>/cadastro/{id}</td>
+            <td>&#8594</td>
+            <td>Lista cadastro com o id que foi passado</td>
+          </tr>
+          <tr>
+            <td class="padding">
+              <button class="botao post">POST</button>
+            </td>
+            <td>/cadastro/{id}</td>
+            <td>&#8594</td>
+            <td>Cria cadastro com o id que foi passado</td>
+          </tr>
+          <tr>
+            <td class="padding">
+              <button class="botao del">DELETE</button>
+            </td>
+            <td>/cadastro/{id}</td>
+            <td>&#8594</td>
+            <td>Exclui cadastro com o id que foi passado</td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
 
