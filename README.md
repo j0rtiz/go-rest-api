@@ -7,4 +7,6 @@ Post originalmente publicado em https://hakaselogs.me e adaptado por Francis Sun
 * Server: "go-rest-api.exe"
 * Interface para testes: "client/npm run start"
 
->Para executar a interface de testes, primeiro instalar o vue-cli e quasar-cli: "npm install -g vue-cli" e "npm install -g quasar-cli"
+>Para executar a interface de testes, primeiro instalar o vue-cli e quasar-cli:
+1. npm install -g vue-cli
+2. npm install -g quasar-cli
