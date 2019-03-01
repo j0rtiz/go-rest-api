@@ -8,5 +8,5 @@ Post originalmente publicado em https://hakaselogs.me e adaptado por Francis Sun
 * Interface para testes: "client/npm run start"
 
 >Para executar a interface de testes, primeiro instalar o vue-cli e quasar-cli:
-1. npm install -g vue-cli
-2. npm install -g quasar-cli
+* npm install -g vue-cli
+* npm install -g quasar-cli
